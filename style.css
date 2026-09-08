@@ -1,0 +1,430 @@
+:root {
+  /* Palette — cream / blush / sage / deep green / ink.
+     Contrast against --bg, all AA or better at body size:
+     text 6.6 · accent 5.9 · muted 5.7 · faint 4.7 */
+  --bg:          #3c4f4e;               /* deep green, page base    */
+  --bg-raised:   #475d5c;               /* deep green, cards        */
+  --border:      rgba(231, 223, 214, .15);
+  --text:        #e7dfd6;               /* cream                    */
+  --muted:       #cbd4cc;
+  --faint:       #b6c2ba;
+  --accent:      #e4d2c4;               /* blush                    */
+  --accent-soft: rgba(228, 210, 196, .14);
+  --accent-line: rgba(228, 210, 196, .45);
+  --sage:        #97a69b;
+  --ink:         #141f26;
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--muted);
+  font: 16px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A soft, static wash in the corner — no cursor tracking, no motion. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(700px circle at 10% 6%,  rgba(151, 166, 155, .16), transparent 64%),
+    radial-gradient(620px circle at 94% 96%, rgba(20,  31,  38,  .28), transparent 62%);
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--accent); color: var(--ink); font-weight: 600;
+  padding: 10px 16px;
+}
+.skip:focus { left: 12px; top: 12px; }
+
+/* ============ SHELL ============ */
+.shell {
+  position: relative;
+  z-index: 1;
+  /* Contains the slide-in without creating a scroll container, so the
+     sticky left column keeps working. */
+  overflow-x: clip;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 40%) minmax(0, 60%);
+    gap: 60px;
+  }
+}
+
+/* ============ LEFT COLUMN ============ */
+.side { padding: 72px 0 40px; }
+
+@media (min-width: 1024px) {
+  .side {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 88px 0 68px;
+  }
+}
+
+.name {
+  font-size: clamp(2.3rem, 5.2vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.role {
+  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 18px;
+}
+.tagline {
+  font-size: .96rem;
+  max-width: 34ch;
+  margin: 0;
+}
+.edu-line {
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--faint);
+  margin: 20px 0 0;
+  letter-spacing: .01em;
+}
+
+/* nav */
+.side nav { display: none; }
+@media (min-width: 1024px) {
+  .side nav { display: block; margin-top: 56px; }
+}
+.side nav ul { list-style: none; margin: 0; padding: 0; }
+.side nav li { margin-bottom: 14px; }
+.side nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 3px 0;
+  transition: color .2s;
+}
+.side nav a .bar {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: var(--faint);
+  transition: width .2s, background-color .2s;
+}
+.side nav a:hover,
+.side nav a.active { color: var(--text); }
+.side nav a:hover .bar,
+.side nav a.active .bar { width: 62px; background: var(--accent); }
+
+/* socials */
+.socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0;
+  margin: 36px 0 0;
+}
+.socials a {
+  font-size: .85rem;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.socials a:hover { color: var(--accent); border-bottom-color: var(--accent-line); }
+
+/* ============ RIGHT COLUMN ============ */
+main { padding: 0 0 96px; }
+@media (min-width: 1024px) { main { padding: 88px 0 120px; } }
+
+section { margin-bottom: 88px; scroll-margin-top: 24px; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 500;
+  margin: 0 0 26px;
+}
+
+/* sticky mini-heading on mobile */
+.sticky-label {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: block;
+  padding: 14px 0;
+  margin: 0 0 20px;
+  background: rgba(60, 79, 78, .92);
+  backdrop-filter: blur(8px);
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+}
+@media (min-width: 1024px) { .sticky-label { display: none; } }
+@media (max-width: 1023px) { .section-label { display: none; } }
+
+/* Headshot — the photo's light-grey studio background sits hard against
+   the green, so it gets a green inner ring, a blush hairline, and a soft
+   shadow to step the two apart. */
+.avatar {
+  display: block;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-raised);
+  box-shadow:
+    0 0 0 1px var(--accent-line),
+    0 10px 30px rgba(20, 31, 38, .38);
+}
+.prose p.avatar-wrap { margin: 0 0 26px; }
+
+.prose p { margin: 0 0 16px; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 600; }
+.prose a {
+  border-bottom: 1px solid var(--accent-line);
+  transition: border-color .2s;
+}
+.prose a:hover { border-bottom-color: var(--accent); }
+
+/* ============ ENTRY CARDS ============ */
+.entry {
+  display: grid;
+  gap: 4px 22px;
+  padding: 18px;
+  margin: 0 0 10px -18px;
+  width: calc(100% + 36px);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: background-color .2s, border-color .2s;
+}
+@media (min-width: 700px) {
+  .entry { grid-template-columns: 112px minmax(0, 1fr); }
+}
+.entry:hover, .entry:focus-within {
+  background: var(--bg-raised);
+  border-color: var(--border);
+}
+
+.entry .when {
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 5px;
+  line-height: 1.5;
+}
+
+.entry h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 3px;
+  line-height: 1.35;
+}
+.entry h3 a { color: inherit; }
+.entry:hover h3 a, .entry h3 a:hover { color: var(--accent); }
+.entry h3 .at { color: var(--muted); font-weight: 400; }
+
+.entry .sub {
+  font-size: .85rem;
+  color: var(--faint);
+  margin: 0 0 10px;
+}
+
+.entry ul.points { margin: 0; padding-left: 17px; }
+.entry ul.points li { margin-bottom: 7px; font-size: .92rem; }
+.entry ul.points li:last-child { margin-bottom: 0; }
+.entry ul.points li strong { color: var(--text); font-weight: 600; }
+
+.entry p.blurb { margin: 0 0 10px; font-size: .92rem; }
+
+/* chips */
+ul.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 13px 0 0;
+}
+ul.chips li {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  padding: 4px 9px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 13px;
+  font-size: .82rem;
+  font-family: var(--mono);
+}
+.entry-links a { color: var(--muted); }
+.entry-links a:hover { color: var(--accent); }
+.entry-links a::after { content: " ↗"; }
+
+.aside-note {
+  font-size: .82rem;
+  color: var(--faint);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 11px 13px;
+  margin: 13px 0 0;
+}
+
+.more-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--accent-line);
+}
+.more-link:hover { color: var(--accent); }
+
+/* ============ TOOLKIT ============ */
+.kit { display: grid; gap: 22px; }
+@media (min-width: 640px) { .kit { grid-template-columns: 1fr 1fr; } }
+.kit h3 {
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+.kit ul { list-style: none; padding: 0; margin: 0; }
+.kit li { font-size: .9rem; margin-bottom: 5px; color: var(--muted); }
+
+.coursework {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: .88rem;
+}
+.coursework strong { color: var(--text); font-weight: 600; }
+
+/* ============ SCROLL REVEAL ============ */
+/* Content slides in from the right as each block enters the viewport.
+   The .js class is set by an inline script so nothing flashes before
+   the observer runs; without JS, everything renders normally. */
+html.js main .section-label,
+html.js main .sticky-label,
+html.js main .prose p,
+html.js main .entry,
+html.js main .kit > div,
+html.js main .coursework {
+  opacity: 0;
+  transform: translateX(34px);
+  /* Leaving the viewport: quicker, and no stagger — the delay lives on
+     .in below, so it applies only on the way in. */
+  transition:
+    opacity   .38s ease,
+    transform .38s ease;
+  transition-delay: 0s;
+}
+/* Each of these mirrors its hiding selector plus .in, so it always wins
+   on specificity — a bare `.in` rule loses to `main .kit > div`. */
+html.js main .section-label.in,
+html.js main .sticky-label.in,
+html.js main .prose p.in,
+html.js main .entry.in,
+html.js main .kit > div.in,
+html.js main .coursework.in {
+  opacity: 1;
+  transform: none;
+  /* Arriving: slower, eased, and staggered per item. */
+  transition:
+    opacity   .6s ease,
+    transform .6s cubic-bezier(.22, .61, .36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* The left column fades up once on load rather than on scroll. */
+html.js .side > div,
+html.js .socials {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise .7s cubic-bezier(.22, .61, .36, 1) forwards;
+}
+html.js .socials { animation-delay: .15s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* Browsers without overflow clipping keep the fade but skip the slide,
+   so a mid-animation element can never widen the page. */
+@supports not (overflow-x: clip) {
+  html.js main .section-label,
+  html.js main .sticky-label,
+  html.js main .prose p,
+  html.js main .entry,
+  html.js main .kit > div,
+  html.js main .coursework { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js main .section-label,
+  html.js main .sticky-label,
+  html.js main .prose p,
+  html.js main .entry,
+  html.js main .kit > div,
+  html.js main .coursework,
+  html.js .side > div,
+  html.js .socials {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
