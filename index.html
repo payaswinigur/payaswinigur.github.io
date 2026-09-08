@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payaswini Gurung</title>
+<meta name="description" content="Payaswini Gurung — computer science student at The Ohio State University. Projects in accessible web design, AI assistants, and API-driven interfaces.">
+
+<!-- ============================================================
+     EDIT ME: search for "EDIT ME" to find everything you should
+     personalize — links, intro text, and the recipe card project.
+     ============================================================ -->
+
+<style>
+  :root {
+    --bg:        #fbfbf9;
+    --surface:   #ffffff;
+    --border:    #e4e2dc;
+    --text:      #1c1b19;
+    --muted:     #6b6862;
+    --faint:     #8f8b83;
+    --accent:    #9a3412;
+    --accent-bg: #fdf1ec;
+    --radius: 10px;
+    --maxw: 720px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #16161a;
+      --surface:   #1e1e23;
+      --border:    #33333b;
+      --text:      #eceae6;
+      --muted:     #a5a19a;
+      --faint:     #7e7a73;
+      --accent:    #f0885c;
+      --accent-bg: #2a1f1a;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* ---------- skip link ---------- */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 16px;
+    z-index: 100;
+  }
+  .skip:focus { left: 8px; top: 8px; }
+
+  /* ---------- header ---------- */
+  header.hero {
+    padding: 96px 0 56px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 6vw, 2.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+  .lede {
+    font-size: 1.075rem;
+    color: var(--muted);
+    margin: 0 0 28px;
+    max-width: 60ch;
+  }
+  .lede strong { color: var(--text); font-weight: 600; }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .links a {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: .9rem;
+    color: var(--text);
+    background: var(--surface);
+    transition: border-color .15s, color .15s;
+  }
+  .links a:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 44px 0; }
+
+  h2 {
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 600;
+    margin: 0 0 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ---------- project ---------- */
+  .project {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .project:last-of-type { border-bottom: none; }
+
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .project h3 {
+    font-size: 1.28rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .project h3 a { color: var(--text); }
+  .project h3 a:hover { color: var(--accent); text-decoration: none; }
+
+  .meta {
+    font-size: .8rem;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: .95rem;
+    margin: 0 0 16px;
+  }
+
+  .project p.body { margin: 0 0 16px; }
+
+  .detail-label {
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 600;
+    margin: 20px 0 8px;
+  }
+
+  .project ul.points {
+    margin: 0 0 4px;
+    padding-left: 18px;
+  }
+  .project ul.points li {
+    margin-bottom: 7px;
+    color: var(--muted);
+  }
+  .project ul.points li strong { color: var(--text); font-weight: 600; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .86em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--text);
+  }
+
+  /* ---------- tech chips ---------- */
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 18px;
+  }
+  .stack li {
+    font-size: .78rem;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid transparent;
+    font-weight: 500;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: .9rem;
+    margin-top: 18px;
+  }
+  .project-links a::after {
+    content: " →";
+    font-size: .85em;
+  }
+
+  .note {
+    font-size: .85rem;
+    color: var(--faint);
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin: 14px 0 0;
+  }
+
+  /* ---------- repo grid ---------- */
+  #repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .repo {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 15px 16px;
+    transition: border-color .15s;
+  }
+  .repo:hover { border-color: var(--accent); }
+  .repo a {
+    color: var(--text);
+    font-weight: 600;
+    font-size: .95rem;
+    word-break: break-word;
+  }
+  .repo a:hover { color: var(--accent); text-decoration: none; }
+  .repo p {
+    margin: 6px 0 0;
+    font-size: .85rem;
+    color: var(--muted);
+  }
+  .repo .lang {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: .74rem;
+    color: var(--faint);
+  }
+  .status {
+    color: var(--faint);
+    font-size: .9rem;
+    margin: 0;
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    padding: 48px 0 72px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+  footer p { margin: 0 0 10px; }
+
+  @media (max-width: 520px) {
+    header.hero { padding: 64px 0 40px; }
+    .meta { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Payaswini&nbsp;Gurung · Columbus, Ohio</p>
+    <h1>I build things for the web that are fast, accessible, and actually useful.</h1>
+
+    <!-- EDIT ME: rewrite this paragraph in your own voice -->
+    <p class="lede">
+      Computer science student at <strong>The Ohio State University</strong>. Most of my work
+      lives at the intersection of front-end craft and APIs — accessible interfaces, AI-backed
+      assistants, and small tools that pull real data and make it readable. Currently working
+      through the OSU software sequence and building side projects in between.
+    </p>
+
+    <!-- EDIT ME: swap in your real LinkedIn / resume URLs, or delete lines you don't want -->
+    <ul class="links">
+      <li><a href="https://github.com/payaswinigur">GitHub</a></li>
+      <li><a href="mailto:gurung.38@osu.edu">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/YOUR-LINKEDIN-HANDLE">LinkedIn</a></li>
+      <li><a href="resume.pdf">Résumé</a></li>
+    </ul>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================== FEATURED PROJECTS ==================== -->
+    <section id="projects">
+      <h2>Selected Projects</h2>
+
+      <!-- ---------- 1. Intel Accessibility ---------- -->
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/payaswinigur/03IntelAccesibility">Intel Sustainability Timeline</a></h3>
+          <span class="meta">2025 · Accessibility</span>
+        </div>
+        <p class="tagline">An accessible, scroll-snapping timeline of Intel's environmental history, 1968–2024.</p>
+
+        <p class="body">
+          A single-page timeline that walks through eleven moments in Intel's sustainability
+          story — from the company's founding through its 2040 net-zero commitment. The brief was
+          less about the content and more about the constraint: build something visually rich
+          that still works completely for someone using a screen reader or navigating by keyboard
+          alone. Every design decision had to survive that test.
+        </p>
+
+        <p class="detail-label">What I focused on</p>
+        <ul class="points">
+          <li><strong>Semantic structure first.</strong> Real <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;article&gt;</code> landmarks instead of nested divs, so assistive tech gets a usable document outline.</li>
+          <li><strong>Keyboard-navigable timeline.</strong> Each card is focusable, so the whole timeline can be traversed by tabbing — not just by scrolling or dragging.</li>
+          <li><strong>Descriptive alt text on every image</strong>, written to convey what the image contributes rather than restating the heading next to it.</li>
+          <li><strong>Labeled form controls</strong> using visually-hidden labels, so the newsletter input announces itself properly without cluttering the visual design.</li>
+          <li><strong>ARIA region labeling</strong> on the timeline so it's announced as a named landmark, and a responsive Bootstrap grid that reflows cleanly down to mobile.</li>
+        </ul>
+
+        <p class="detail-label">Built with</p>
+        <ul class="stack">
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>CSS Scroll Snap</li>
+          <li>Bootstrap 5.3</li>
+          <li>Bootstrap Icons</li>
+          <li>WCAG / ARIA</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/payaswinigur/03IntelAccesibility">Source on GitHub</a>
+        </div>
+      </article>
+
+      <!-- ---------- 2. L'Oréal chatbot ---------- -->
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/payaswinigur/lorealChatBot">L'Oréal AIdvisor</a></h3>
+          <span class="meta">2025 · AI / Serverless</span>
+        </div>
+        <p class="tagline">A conversational beauty assistant that recommends products and builds routines.</p>
+
+        <p class="body">
+          A chat interface that answers questions about L'Oréal's makeup, skincare, haircare, and
+          fragrance lines and suggests personalized routines. The interesting problem wasn't the
+          chat UI — it was doing it without ever shipping an API key to the browser. I put a
+          Cloudflare Worker in front of the OpenAI API so the key stays server-side and the
+          front end only ever talks to my own endpoint.
+        </p>
+
+        <p class="detail-label">What I focused on</p>
+        <ul class="points">
+          <li><strong>Serverless proxy architecture.</strong> A Cloudflare Worker holds the OpenAI key as an encrypted secret, handles CORS preflight, forwards the conversation to GPT-4o, and returns the response — the client never sees a credential.</li>
+          <li><strong>Persona through system prompting.</strong> A system message scopes the model to L'Oréal products so it stays on-brand instead of answering as a general assistant.</li>
+          <li><strong>Responsive conversation state.</strong> A typing indicator appears the moment a message is sent and is replaced in place by the reply, so the interface never looks frozen while the model is generating.</li>
+          <li><strong>Graceful failure.</strong> Network and API errors surface as a visible in-chat message rather than a silent dead end, and the chat auto-scrolls to keep the newest message in view.</li>
+          <li><strong>Progressive disclosure.</strong> The assistant lives in a collapsible panel that scrolls itself into view when opened, so it enhances the page rather than dominating it.</li>
+        </ul>
+
+        <p class="detail-label">Built with</p>
+        <ul class="stack">
+          <li>JavaScript (ES6+)</li>
+          <li>OpenAI GPT-4o</li>
+          <li>Cloudflare Workers</li>
+          <li>Fetch API / async-await</li>
+          <li>REST</li>
+          <li>HTML5</li>
+          <li>CSS3</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/payaswinigur/lorealChatBot">Source on GitHub</a>
+          <a href="https://github.com/payaswinigur/09-prj-loreal-routine-builder">Routine builder variant</a>
+        </div>
+      </article>
+
+      <!-- ---------- 3. NASA Space Explorer ---------- -->
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/payaswinigur/09-nasa-space-explorer-v2">NASA Space Explorer</a></h3>
+          <span class="meta">2025 · API / Front-end</span>
+        </div>
+        <p class="tagline">A gallery that pulls NASA's Astronomy Picture of the Day feed and makes it browsable.</p>
+
+        <p class="body">
+          Fetches NASA's APOD feed and renders a random six-entry gallery on demand — each card
+          carrying the image or video, its title, date, and a trimmed explanation you can expand.
+          The wrinkle in the APOD data is that entries aren't uniform: most are images, but some
+          are YouTube videos, so the renderer has to branch on media type and produce a genuinely
+          different card for each rather than breaking on the ones it didn't expect.
+        </p>
+
+        <p class="detail-label">What I focused on</p>
+        <ul class="points">
+          <li><strong>Media-type branching.</strong> Images render as figures; video entries render as embedded, fullscreen-capable iframes with a fallback link to open the source in a new tab.</li>
+          <li><strong>Readable density.</strong> Explanations are truncated to a scannable length with a "read more" control that expands the full text in place, so the grid stays browsable.</li>
+          <li><strong>Async data handling.</strong> The whole gallery is built from a single <code>fetch</code> with async/await, shuffled server-side-agnostically in the client, and wrapped in error handling that shows a human-readable message instead of an empty page.</li>
+          <li><strong>Responsive CSS grid</strong> that reflows from a multi-column gallery down to a single column, with a friendly empty state before the first fetch.</li>
+          <li><strong>Automated deployment</strong> via a GitHub Actions workflow that publishes the site to GitHub Pages on every push to main.</li>
+        </ul>
+
+        <p class="detail-label">Built with</p>
+        <ul class="stack">
+          <li>JavaScript (ES6+)</li>
+          <li>NASA APOD API</li>
+          <li>Fetch API / async-await</li>
+          <li>JSON</li>
+          <li>CSS Grid</li>
+          <li>GitHub Actions</li>
+          <li>GitHub Pages</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/payaswinigur/09-nasa-space-explorer-v2">Source on GitHub</a>
+        </div>
+      </article>
+
+      <!-- ---------- 4. Digital Recipe Cards ---------- -->
+      <!-- EDIT ME: this repo is private, so I couldn't read the code. Replace the
+           description, bullets, and stack below with the real details, then delete
+           the .note paragraph at the bottom of this block. -->
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/payaswinigur/Recipe-Cards">Digital Recipe Cards</a></h3>
+          <span class="meta">2026 · Front-end</span>
+        </div>
+        <p class="tagline">A browsable set of interactive recipe cards.</p>
+
+        <p class="body">
+          A digital take on the index-card recipe box — recipes laid out as cards you can flip
+          through, search, and read on a phone while your hands are busy. Built to keep the
+          charm of a physical card while adding the things paper can't do: filtering, scaling,
+          and instant lookup.
+        </p>
+
+        <p class="detail-label">What I focused on</p>
+        <ul class="points">
+          <li><strong>Card-based layout</strong> that keeps a full recipe legible on one screen without scrolling past the ingredients.</li>
+          <li><strong>Interactive states</strong> — flip, expand, or filter cards to move between the ingredient list and the method.</li>
+          <li><strong>Mobile-first design</strong>, because a recipe is read standing up in a kitchen, not at a desk.</li>
+        </ul>
+
+        <p class="detail-label">Built with</p>
+        <ul class="stack">
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/payaswinigur/Recipe-Cards">Source on GitHub</a>
+        </div>
+
+        <p class="note">
+          Placeholder — the Recipe-Cards repo is currently private, so this description is a
+          stand-in. Make the repo public for the link to work, then replace this block with the
+          real details and delete this note.
+        </p>
+      </article>
+
+    </section>
+
+    <!-- ==================== AUTO-LOADED REPOS ==================== -->
+    <section id="more">
+      <h2>Everything Else on GitHub</h2>
+      <p class="status" id="repo-status">Loading repositories…</p>
+      <ul id="repo-grid"></ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Built and maintained by Payaswini Gurung. Hosted on GitHub Pages.</p>
+    <p>
+      <a href="https://github.com/payaswinigur">github.com/payaswinigur</a> ·
+      <a href="mailto:gurung.38@osu.edu">gurung.38@osu.edu</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var USERNAME = "payaswinigur";
+
+  // Repos already covered in the Selected Projects section above — hidden from the list.
+  var FEATURED = [
+    "03IntelAccesibility",
+    "lorealChatBot",
+    "09-prj-loreal-routine-builder",
+    "09-nasa-space-explorer-v2",
+    "Recipe-Cards"
+  ];
+
+  // Nicer display names for repos whose folder name doesn't read well.
+  var NAME_OVERRIDES = {
+    "IntelLorealChatbot":            "Intel × L'Oréal Chatbot",
+    "IntelThroughTheYears":          "Intel Through the Years",
+    "PersonalProject":               "DanceFormation",
+    "CluelessAI":                    "CluelessAI",
+    "charity-waterFinal":            "charity: water — Final",
+    "charity-waterPrototype":        "charity: water — Prototype",
+    "Travel-Water":                  "Travel: Water",
+    "05-prj-intel-event-check-in":   "Intel Event Check-In"
+  };
+
+  // Hand-written descriptions. These take priority over GitHub's own description field.
+  var FALLBACK_DESC = {
+    "IntelLorealChatbot":            "Chat-assistant prototype exploring layout and message flow.",
+    "IntelThroughTheYears":          "Interactive timeline of Intel's history and milestones.",
+    "05-prj-intel-event-check-in":   "Event check-in form with live attendee tracking and progress state.",
+    "charity-waterFinal":            "Interactive game raising awareness for clean-water access.",
+    "charity-waterPrototype":        "Early prototype of the charity: water awareness game.",
+    "Travel":                        "Browser game built around travel and resource decisions.",
+    "Travel-Water":                  "Water-themed variant of the travel game.",
+    "PersonalProject":               "DanceFormation — a Java component built through the full OSU software-sequence lifecycle: interfaces, kernel implementation, JUnit tests, and documentation."
+  };
+
+  var grid   = document.getElementById("repo-grid");
+  var status = document.getElementById("repo-status");
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function prettyName(name) {
+    if (NAME_OVERRIDES[name]) return NAME_OVERRIDES[name];
+    // "09-nasa-space-explorer-v2" -> "Nasa Space Explorer V2"
+    return name
+      .replace(/^\d+[-_]?(prj[-_])?/i, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/\b\w/g, function (m) { return m.toUpperCase(); }) || name;
+  }
+
+  fetch("https://api.github.com/users/" + USERNAME + "/repos?per_page=100&sort=updated")
+    .then(function (res) {
+      if (!res.ok) throw new Error("GitHub responded with " + res.status);
+      return res.json();
+    })
+    .then(function (repos) {
+      var list = repos.filter(function (r) {
+        return !r.fork && !r.archived && FEATURED.indexOf(r.name) === -1;
+      });
+
+      if (!list.length) {
+        status.textContent = "No other public repositories right now.";
+        return;
+      }
+
+      status.remove();
+
+      grid.innerHTML = list.map(function (r) {
+        var desc = FALLBACK_DESC[r.name] || r.description || "";
+        var lang = r.language ? '<span class="lang">' + esc(r.language) + "</span>" : "";
+        return '<li class="repo">' +
+                 '<a href="' + esc(r.html_url) + '">' + esc(prettyName(r.name)) + "</a>" +
+                 (desc ? "<p>" + esc(desc) + "</p>" : "") +
+                 lang +
+               "</li>";
+      }).join("");
+    })
+    .catch(function (err) {
+      status.innerHTML = 'Couldn’t load repositories automatically. ' +
+        '<a href="https://github.com/' + USERNAME + '?tab=repositories">Browse them on GitHub</a>.';
+      if (window.console) console.error(err);
+    });
+})();
+</script>
+
+</body>
+</html>
